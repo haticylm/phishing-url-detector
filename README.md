@@ -2,6 +2,10 @@
 
 A beginner-friendly Python cybersecurity project that analyzes URLs and detects possible phishing risk using rule-based checks.
 
+## Web Interface Preview
+
+![Phishing URL Detection Tool](screenshots/web-interface.png)
+
 This project does not use machine learning. It extracts simple URL-based features and calculates a risk score based on common phishing indicators.
 
 ## Features
