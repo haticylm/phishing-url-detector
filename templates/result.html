@@ -78,6 +78,11 @@
             overflow-wrap: anywhere;
         }
 
+        .history-url {
+            overflow-wrap: anywhere;
+            max-width: 420px;
+        }
+
         .button-link {
             display: inline-block;
             margin-top: 24px;
@@ -130,10 +135,36 @@
             {% for feature_name, value in result.features.items() %}
                 <tr>
                     <td>{{ feature_name.replace("_", " ").title() }}</td>
-                    <td>{{ value }}</td>
+                    <td>
+                        {% if value is iterable and value is not string %}
+                            {{ value | join(", ") }}
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </table>
+
+        <h2>Analysis History</h2>
+        {% if history %}
+            <table>
+                <tr>
+                    <th>URL</th>
+                    <th>Score</th>
+                    <th>Risk Level</th>
+                </tr>
+                {% for item in history %}
+                    <tr>
+                        <td class="history-url">{{ item.url }}</td>
+                        <td>{{ item.score }}</td>
+                        <td>{{ item.risk_level }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No previous analyses yet.</p>
+        {% endif %}
 
         <a class="button-link" href="/">Analyze Another URL</a>
     </main>

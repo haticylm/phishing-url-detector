@@ -8,6 +8,7 @@ from detector import analyze_url
 
 
 app = Flask(__name__)
+history = []
 
 
 @app.route("/")
@@ -25,7 +26,20 @@ def analyze():
         return render_template("index.html", error="Please enter a URL.")
 
     result = analyze_url(url)
-    return render_template("result.html", result=result)
+    history.append(
+        {
+            "url": result["url"],
+            "score": result["score"],
+            "risk_level": result["risk_level"],
+        }
+    )
+
+    newest_first_history = list(reversed(history))
+    return render_template(
+        "result.html",
+        result=result,
+        history=newest_first_history,
+    )
 
 
 if __name__ == "__main__":
