@@ -21,12 +21,14 @@ This project does not use machine learning. It extracts simple URL-based feature
 ## Technologies Used
 
 - Python 3
+- Flask
 - `urllib.parse`
 - `re`
 - `csv`
 - `pathlib`
 
-Only Python standard library modules are used.
+The terminal version uses Python standard library modules. The optional web
+interface uses Flask.
 
 ## Project Structure
 
@@ -35,6 +37,10 @@ phishing-url-detector/
 ├── features.py
 ├── detector.py
 ├── app.py
+├── web_app.py
+├── templates/
+│   ├── index.html
+│   └── result.html
 ├── test_urls.csv
 ├── requirements.txt
 └── README.md
@@ -53,6 +59,29 @@ cd phishing-url-detector
 
 ```bash
 python3 app.py
+```
+
+## Running the Flask Web Interface
+
+The Flask interface is optional. The terminal version in `app.py` still works
+the same way.
+
+Install the required package:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the Flask app:
+
+```bash
+python3 web_app.py
+```
+
+Then open the local web address shown in the terminal, usually:
+
+```text
+http://127.0.0.1:5000
 ```
 
 ## Example Usage
@@ -130,7 +159,7 @@ Risk levels:
 - Add more URL-based features
 - Improve IP address validation
 - Add domain age checks using external APIs
-- Add a simple web interface with Flask
+- Improve the Flask web interface with better styling
 - Export analysis results to a CSV file
 - Add automated unit tests
 

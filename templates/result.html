@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        main {
+            max-width: 820px;
+            margin: 40px auto;
+            padding: 32px;
+            background: #ffffff;
+            border: 1px solid #dbe3ef;
+            border-radius: 8px;
+        }
+
+        h1,
+        h2 {
+            color: #111827;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .summary-box {
+            padding: 16px;
+            border: 1px solid #dbe3ef;
+            border-radius: 8px;
+            background: #f9fbff;
+        }
+
+        .label {
+            display: block;
+            margin-bottom: 6px;
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        ul {
+            padding-left: 22px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #dbe3ef;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f9fbff;
+        }
+
+        .url {
+            overflow-wrap: anywhere;
+        }
+
+        .history-url {
+            overflow-wrap: anywhere;
+            max-width: 420px;
+        }
+
+        .button-link {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 12px 18px;
+            border-radius: 6px;
+            background: #2563eb;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .button-link:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Analysis Result</h1>
+
+        <p class="url"><strong>Analyzed URL:</strong> {{ result.url }}</p>
+
+        <div class="summary">
+            <div class="summary-box">
+                <span class="label">Risk Score</span>
+                <span class="value">{{ result.score }}</span>
+            </div>
+            <div class="summary-box">
+                <span class="label">Risk Level</span>
+                <span class="value">{{ result.risk_level }}</span>
+            </div>
+        </div>
+
+        <h2>Reasons</h2>
+        {% if result.reasons %}
+            <ul>
+                {% for reason in result.reasons %}
+                    <li>{{ reason }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No risky indicators found.</p>
+        {% endif %}
+
+        <h2>Extracted Features</h2>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Value</th>
+            </tr>
+            {% for feature_name, value in result.features.items() %}
+                <tr>
+                    <td>{{ feature_name.replace("_", " ").title() }}</td>
+                    <td>
+                        {% if value is iterable and value is not string %}
+                            {{ value | join(", ") }}
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Analysis History</h2>
+        {% if history %}
+            <table>
+                <tr>
+                    <th>URL</th>
+                    <th>Score</th>
+                    <th>Risk Level</th>
+                </tr>
+                {% for item in history %}
+                    <tr>
+                        <td class="history-url">{{ item.url }}</td>
+                        <td>{{ item.score }}</td>
+                        <td>{{ item.risk_level }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No previous analyses yet.</p>
+        {% endif %}
+
+        <a class="button-link" href="/">Analyze Another URL</a>
+    </main>
+</body>
+</html>
