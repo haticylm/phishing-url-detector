@@ -1,0 +1,13 @@
+url,label
+https://www.google.com,safe
+https://www.python.org,safe
+https://github.com/login,safe
+https://www.bbc.com/news,safe
+http://192.168.1.10/login,phishing
+http://paypal-login-secure-update.com/verify/account,phishing
+https://secure-bank-confirm.example.com/signin,phishing
+http://example.com@malicious-site.com/login,phishing
+https://bit.ly/3secureAccount,suspicious
+http://my-account-update.example.net/confirm,suspicious
+https://accounts.google.com/signin,suspicious
+http://very-long-domain-name-created-to-look-like-a-real-bank-example.com/login/verify/update-password,phishing
